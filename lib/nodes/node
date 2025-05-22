@@ -1,0 +1,56 @@
+import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'node.g.dart';
+
+@JsonSerializable()
+class Node {
+
+  final String label;
+  final double x;
+  final double y;
+  final double height;
+  final double width;
+
+  const Node({
+    required this.label,
+    required this.x,
+    required this.y,
+    required this.height,
+    required this.width,
+  });
+
+  Offset get position => Offset(x, y);
+  Size get size => Size(width, height);
+
+  factory Node.placeholder({
+    final String label = "Placeholder",
+    final double x=0,
+    final double y=0
+  }) => Node(
+    label: label,
+    x: x,
+    y: y,
+    height: 100,
+    width: 100,
+  );
+
+  factory Node.fromJson(Map<String, dynamic> json) => _$NodeFromJson(json);
+
+  Map<String, dynamic> toJson() => _$NodeToJson(this);
+
+  Node copyWith({
+    String? label,
+    double? x,
+    double? y,
+  }) {
+    return Node(
+      label: label ?? this.label,
+      x: x ?? this.x,
+      y: y ?? this.y,
+      height: this.height,
+      width: this.width,
+    );
+  }
+
+}
